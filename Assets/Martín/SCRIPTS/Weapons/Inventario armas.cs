@@ -24,7 +24,6 @@ public class InventarioArmas : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && armaActual != null)
         {
             armaActual.ComenzarDisparo();
-            AudioManager.AudioInstance.Play("Disparo");
         }
         if (Input.GetButtonUp("Fire1") && armaActual != null)
         {

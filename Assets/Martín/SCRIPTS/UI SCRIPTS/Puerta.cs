@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Puerta : MonoBehaviour
+{
+    [SerializeField] private bool entrarPuerta;
+    [SerializeField] private bool mouseIn;
+    [SerializeField] private float radio;
+    [SerializeField] private LayerMask jugadorMascara;
+
+    // Referencia al script del recolector de objetos
+
+    private void OnMouseEnter()
+    {
+        mouseIn = true;
+    }
+    private void OnMouseExit()
+    {
+        mouseIn = false;
+    }
+
+    private void Update()
+    {
+        entrarPuerta = Physics.CheckSphere(transform.position, radio, jugadorMascara);
+
+        // Verifica si el jugador tiene la cantidad necesaria de objetos y está en rango
+        if (Input.GetKeyDown(KeyCode.E) && mouseIn && entrarPuerta && Llave.objetosRecogidos >= Llave.objetosNecesarios)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("Fin del juego");
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radio);
+    }
+}

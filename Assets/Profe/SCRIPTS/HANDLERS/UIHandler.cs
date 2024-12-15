@@ -23,7 +23,7 @@ namespace Profe
         [SerializeField] private Page[] pages = new Page[3]; // 24 items
 
         public int actualPage = 0;
-        private int maxItemsPerPage = 8;
+        private int maxItemsPerPage = 2;
 
         private InventoryHandler inventoryRef;
 
@@ -51,42 +51,38 @@ namespace Profe
 
         private void OpenInventory()
         {
-
             inventoryOpened = !inventoryOpened;
             inventoryCanvas.SetActive(inventoryOpened);
 
-           if(inventoryRef.inventory.Count <= 0) // Revisa si hay cosas en el inventario
+            if (inventoryOpened)
             {
-                // Si no hay nada, aqui termina
+                // Liberar el cursor
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                // Bloquear el cursor nuevamente
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+
+            if (inventoryRef.inventory.Count <= 0) // Revisa si hay cosas en el inventario
+            {
+                // Si no hay nada, aquí termina
                 return;
             }
             else
             {
-                //   i = el item en el que voy en mi pagina actual
-                for(int i = pages[actualPage].itemsDeployed; i < inventoryRef.inventory.Count; i++) // Tenemos 1 item
-                {               
-                    GameObject item = Instantiate(uiItemPrefab); // Creo un item en el canvas
-                    item.transform.SetParent(displayArea.transform); // Lo emparento al area del libro/display/area util
-                    item.transform.localScale = Vector3.one; // le pongo la escala en 1 por que a veces sale de diferente tamaño no se porque
-                    item.GetComponent<ItemUI>().SetItemInfo(inventoryRef.inventory[i]); // le asigno la informacion
-                    pages[actualPage].items[pages[actualPage].itemsDeployed] = item; // guardo el item en la posicion correspondiente de la pagina actual
-                    // pages[actualPage].items estoy accediendo a mi arreglo de items en mi pagina actual
-                    // items[pages[actualPage].itemsDeployed] estoy accediendo al item que sigue, es decir, donde voy a guardar mi item
-                    pages[actualPage].itemsDeployed++; // 8
-
-                    if (pages[actualPage].itemsDeployed >= maxItemsPerPage) // Si ya alcance mi capacidad maxima de items en mi pagina actual
-                    {
-                        actualPage++; // paso a la siguiente pagina
-                    }
-                }
-
+                // Resto del código de OpenInventory (manejo de páginas, ítems, etc.)
                 HideAllItems();
                 ShowItems(actualPage);
-
             }
         }
 
-       
+
+
+
 
         [ContextMenu("Show Items in Page")]
         private void ShowItems()
@@ -138,7 +134,37 @@ namespace Profe
                 Debug.Log("Siguiente pagina");
             }
         }
-        
+
+        public void NextPage()
+        {
+            // Asegurarte de no exceder las páginas disponibles
+            if (actualPage < pages.Length - 1 && pages[actualPage + 1].itemsDeployed > 0)
+            {
+                HideItems(actualPage); // Oculta los ítems de la página actual
+                actualPage++;          // Cambia a la siguiente página
+                ShowItems(actualPage); // Muestra los ítems de la nueva página
+            }
+            else
+            {
+                Debug.Log("No hay más páginas disponibles.");
+            }
+        }
+
+        public void PreviousPage()
+        {
+            // Asegúrate de no ir más atrás de la primera página
+            if (actualPage > 0)
+            {
+                HideItems(actualPage); // Oculta los ítems de la página actual
+                actualPage--;          // Cambia a la página anterior
+                ShowItems(actualPage); // Muestra los ítems de la nueva página
+            }
+            else
+            {
+                Debug.Log("Ya estás en la primera página.");
+            }
+        }
+
     }
 
     [Serializable]

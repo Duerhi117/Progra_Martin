@@ -10,6 +10,8 @@ public class Pistola : Arma
         if (balasActuales > 0)
         {
             balasActuales--;
+
+            AudioManager.AudioInstance.Play("Disparo");
             GameObject bala = Instantiate(balaPrefab, shootPoint.position, shootPoint.rotation);
             bala.GetComponent<Rigidbody>().AddForce(shootPoint.forward * velocidadBala);
             Destroy(bala, 5f);
