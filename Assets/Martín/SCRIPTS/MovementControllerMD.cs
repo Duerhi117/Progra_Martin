@@ -1,53 +1,50 @@
 using UnityEngine;
 
-/// <summary>
-/// Un movimiento que requiere fisica se debe de hacer con rigidbody
-/// 
-/// Un movimiento que unicamente es lateral, salto, y ya, Usas CharacterController
-/// 
-/// Un movimiento con Transform puedes hacer de todo, pero requiere más trabajo
-/// 
-/// Inputs
-/// Ridigbody
-/// 3 Velocidades
-/// 
-/// </summary>
-/// 
 namespace Martín
 {
     public class MovementController : MonoBehaviour
     {
-        public float crouchSpeed = 3;
-        public float walkSpeed = 5;
-        public float runSpeed = 7;
+        [SerializeField] private float crouchSpeed = 3;
+        [SerializeField] private float walkSpeed = 5;
+        [SerializeField] private float runSpeed = 7;
+        [SerializeField] private float jumpForce = 1; // Fuerza del salto
+        [SerializeField] private LayerMask groundLayer; // Capa para detectar el suelo
+        [SerializeField] private Transform groundCheck; // Punto para verificar si está tocando el suelo
+        [SerializeField] private float groundCheckRadius = 0.2f; // Radio de detección del suelo
 
         private Rigidbody rb;
-
-        Corrutinas corrutinas;
+        private bool isGrounded;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
-            corrutinas = GetComponent<Corrutinas>();
-        }
-
-        private void Start()
-        {
         }
 
         private void FixedUpdate()
         {
             Move();
+            CheckGround();
+        }
+
+        private void Update()
+        {
+            if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
         }
 
         private void Move()
         {
-            rb.velocity = transform.rotation * new Vector3(HorizontalMove(), 0, VerticalMove()) * ActualSpeed();
+            Vector3 velocity = transform.rotation * new Vector3(HorizontalMove(), 0, VerticalMove()) * ActualSpeed();
+            velocity.y = rb.velocity.y; // Mantén la velocidad vertical para no sobrescribirla
+            rb.velocity = velocity;
         }
+
 
         private float ActualSpeed()
         {
-            return IsRunning() ? runSpeed : IsCrouching() ? crouchSpeed : walkSpeed; // Operador ternario
+            return IsRunning() ? runSpeed : IsCrouching() ? crouchSpeed : walkSpeed;
         }
 
         public float HorizontalMove()
@@ -62,16 +59,7 @@ namespace Martín
 
         public bool IsMoving()
         {
-            if (HorizontalMove() != 0 || VerticalMove() != 0)
-            {
-                Debug.Log("Me muevo");
-                return true;
-            }
-            else
-            {
-                Debug.Log("No me muevo");
-                return false;
-            }
+            return HorizontalMove() != 0 || VerticalMove() != 0;
         }
 
         public bool IsRunning()
@@ -84,5 +72,22 @@ namespace Martín
             return Input.GetKey(KeyCode.LeftControl);
         }
 
+        private void Jump()
+        {
+            if (isGrounded)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            }
+        }
+
+        private void CheckGround()
+        {
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+        }
+
+        public bool IsGrounded()
+        {
+            return isGrounded;
+        }
     }
 }

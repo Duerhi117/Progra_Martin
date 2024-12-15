@@ -72,8 +72,17 @@ namespace Martín
 
         private Vector2 MousePos()
         {
-            return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+            Vector2 mousePos = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
+            // Asegurarse de que no esté fuera de la vista
+            if (mousePos.x < -1 || mousePos.x > 1 || mousePos.y < -1 || mousePos.y > 1)
+            {
+                return Vector2.zero;
+            }
+
+            return mousePos;
         }
+
 
         #endregion
 
