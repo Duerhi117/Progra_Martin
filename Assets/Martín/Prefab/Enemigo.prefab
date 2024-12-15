@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b54ac2169c4d514792c25fa8d6c5a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "radioDeDetecci\xF3n": 12
+  "radioDeDetecci\xF3n": 2
   layer:
     serializedVersion: 2
     m_Bits: 64

@@ -1,0 +1,35 @@
+using UnityEngine;
+
+public class Pistola : Arma
+{
+    public GameObject balaPrefab;
+    public float velocidadBala;
+
+    public override void ComenzarDisparo()
+    {
+        if (balasActuales > 0)
+        {
+            balasActuales--;
+            GameObject bala = Instantiate(balaPrefab, shootPoint.position, shootPoint.rotation);
+            bala.GetComponent<Rigidbody>().AddForce(shootPoint.forward * velocidadBala);
+            Destroy(bala, 5f);
+            Debug.Log("Disparo semiautomático. Balas restantes: " + balasActuales);
+        }
+        else
+        {
+            Debug.Log("Sin balas. Recarga necesaria.");
+        }
+    }
+
+    public override void DetenerDisparo()
+    {
+        // No es necesario detener el disparo para armas semiautomáticas
+    }
+
+    public override void Recargar()
+    {
+        balasActuales = balasPorCargador;
+        Debug.Log("Recargando arma semiautomática.");
+    }
+}
+
