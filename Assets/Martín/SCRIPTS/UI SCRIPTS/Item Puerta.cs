@@ -7,8 +7,8 @@ public class Llave : MonoBehaviour
     [SerializeField] private float radio;
     [SerializeField] private LayerMask jugadorMascara;
 
-    public static int objetosRecogidos = 0; // Total de objetos recolectados
-    public static int objetosNecesarios = 6; // Cantidad necesaria para abrir la puerta
+    public static int objetosRecogidos = 0;
+    public static int objetosNecesarios = 6;
 
     private void OnMouseEnter()
     {
@@ -26,7 +26,8 @@ public class Llave : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && agarrarLlave && mouseIn)
         {
-            objetosRecogidos++; // Incrementar el contador de objetos
+            AudioManager.AudioInstance.Play("Objeto recogido");
+            objetosRecogidos++;
             Destroy(gameObject);
         }
     }

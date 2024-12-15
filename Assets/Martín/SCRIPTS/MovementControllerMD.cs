@@ -7,10 +7,10 @@ namespace Martín
         [SerializeField] private float crouchSpeed = 3;
         [SerializeField] private float walkSpeed = 5;
         [SerializeField] private float runSpeed = 7;
-        [SerializeField] private float jumpForce = 1; // Fuerza del salto
-        [SerializeField] private LayerMask groundLayer; // Capa para detectar el suelo
-        [SerializeField] private Transform groundCheck; // Punto para verificar si está tocando el suelo
-        [SerializeField] private float groundCheckRadius = 0.2f; // Radio de detección del suelo
+        [SerializeField] private float jumpForce = 1;
+        [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private Transform groundCheck;
+        [SerializeField] private float groundCheckRadius = 0.2f;
 
         private Rigidbody rb;
         private bool isGrounded;
@@ -37,7 +37,7 @@ namespace Martín
         private void Move()
         {
             Vector3 velocity = transform.rotation * new Vector3(HorizontalMove(), 0, VerticalMove()) * ActualSpeed();
-            velocity.y = rb.velocity.y; // Mantén la velocidad vertical para no sobrescribirla
+            velocity.y = rb.velocity.y;
             rb.velocity = velocity;
         }
 

@@ -25,7 +25,6 @@ public class Pistola : Arma
 
     public override void DetenerDisparo()
     {
-        // No es necesario detener el disparo para armas semiautomáticas
     }
 
     public override void Recargar()

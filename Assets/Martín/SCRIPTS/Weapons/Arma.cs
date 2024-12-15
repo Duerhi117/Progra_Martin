@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Arma : MonoBehaviour
 {
     public int balasPorCargador = 6;
-    public int balasActuales { get; protected set; } // Propiedad accesible desde el controlador
+    public int balasActuales { get; protected set; }
 
     public Transform shootPoint;
 

@@ -26,11 +26,14 @@ public class Puerta : MonoBehaviour
     {
         entrarPuerta = Physics.CheckSphere(transform.position, radio, jugadorMascara);
 
-        // Verifica si el jugador tiene la cantidad necesaria de objetos y está en rango
+
         if (Input.GetKeyDown(KeyCode.E) && mouseIn && entrarPuerta && Llave.objetosRecogidos >= Llave.objetosNecesarios)
         {
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Fin del juego");
+            AudioManager.AudioInstance.Play("Victoria");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 

@@ -2,34 +2,34 @@ using UnityEngine;
 
 public class Rifle : Arma
 {
-    public float velocidadDisparo = 0.2f; // Tiempo entre disparos
+    public float velocidadDisparo = 0.2f;
     public GameObject balaPrefab;
     public float velocidadBala;
 
-    private bool disparando = false; // Control de disparo continuo
-    private float tiempoUltimoDisparo = 0f; // Control de tiempo entre disparos
+    private bool disparando = false;
+    private float tiempoUltimoDisparo = 0f;
 
     void Update()
     {
-        // Si el jugador está disparando y hay balas disponibles
+        
         if (disparando && balasActuales > 0)
         {
-            if (Time.time >= tiempoUltimoDisparo + velocidadDisparo) // Controla el tiempo entre disparos
+            if (Time.time >= tiempoUltimoDisparo + velocidadDisparo)
             {
                 Disparar();
-                tiempoUltimoDisparo = Time.time; // Actualiza el tiempo del último disparo
+                tiempoUltimoDisparo = Time.time;
             }
         }
     }
 
     public override void ComenzarDisparo()
     {
-        disparando = true; // Marca el inicio del disparo continuo
+        disparando = true;
     }
 
     public override void DetenerDisparo()
     {
-        disparando = false; // Marca el final del disparo continuo
+        disparando = false;
     }
 
     private void Disparar()
@@ -41,20 +41,20 @@ public class Rifle : Arma
             AudioManager.AudioInstance.Play("Disparo");
             GameObject bala = Instantiate(balaPrefab, shootPoint.position, shootPoint.rotation);
             bala.GetComponent<Rigidbody>().AddForce(shootPoint.forward * velocidadBala, ForceMode.Impulse);
-            Destroy(bala, 5f); // Destruye la bala después de 5 segundos
+            Destroy(bala, 5f);
 
             Debug.Log($"Disparando automáticamente. Balas restantes: {balasActuales}");
         }
         else
         {
             Debug.Log("Sin balas. Recarga necesaria.");
-            DetenerDisparo(); // Detenemos el disparo automático si no hay balas
+            DetenerDisparo();
         }
     }
 
     public override void Recargar()
     {
-        balasActuales = balasPorCargador; // Recarga el cargador completo
+        balasActuales = balasPorCargador;
         Debug.Log("Recargando arma automática.");
     }
 }
