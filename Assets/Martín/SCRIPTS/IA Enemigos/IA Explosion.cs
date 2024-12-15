@@ -6,7 +6,10 @@ public class IAExplosion : MonoBehaviour
 {
     public float radioDeDetección;
     public LayerMask layer;
-    private bool sonidoReproducido = false; // Bandera para asegurarse de que el sonido solo se reproduzca una vez
+    public GameObject particulasPrefab;  // Prefab de las partículas
+    public float dañoJugador = 10f;  // Daño que se le hace al jugador
+
+    private bool explosionInstanciada = false;  // Para verificar si la explosión ya fue instanciada
 
     private void Update()
     {
@@ -15,19 +18,55 @@ public class IAExplosion : MonoBehaviour
 
     private void Detectar()
     {
-        // Comprobar si el jugador está dentro del rango de detección
+        // Verificamos si el jugador está dentro del rango de detección
         if (Physics.CheckSphere(transform.position, radioDeDetección, layer))
         {
-            if (!sonidoReproducido) // Reproducir el sonido solo si no ha sido reproducido aún
+            // Si las partículas no han sido instanciadas
+            if (!explosionInstanciada)
             {
+                // Instanciar las partículas
+                GameObject particulas = Instantiate(particulasPrefab, transform.position, Quaternion.identity);
+
+                // Obtener el sistema de partículas y destruir el objeto después de su duración
+                ParticleSystem ps = particulas.GetComponent<ParticleSystem>();
+                if (ps != null)
+                {
+                    // Destruir después de la duración de las partículas
+                    float duracionParticulas = ps.main.duration;
+                    Destroy(particulas, duracionParticulas);  // Destruir después de la duración de las partículas
+                }
+
+                // Reproducir el sonido de la explosión
                 AudioManager.AudioInstance.Play("Explosion");
-                sonidoReproducido = true; // Establecer la bandera para evitar que el sonido se repita
+
+                // Aplicar daño al jugador (suponiendo que el jugador tenga un sistema de vida)
+                AplicarDañoAlJugador();
+
+                // Destruir el enemigo
+                Destroy(gameObject);  // Destruye el enemigo
+
+                // Marcar que las partículas han sido instanciadas
+                explosionInstanciada = true;
             }
         }
         else
         {
-            // Si el jugador sale del rango, permitir que el sonido se reproduzca nuevamente
-            sonidoReproducido = false;
+            // Si el jugador sale del rango, permitir que las partículas puedan ser instanciadas de nuevo
+            explosionInstanciada = false;
+        }
+    }
+
+    private void AplicarDañoAlJugador()
+    {
+        // Detectamos al jugador en el rango de explosión y le aplicamos daño
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radioDeDetección, layer);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Player")) // Asegúrate de que el jugador tenga el tag "Player"
+            {
+                // Usamos el método QuitarVida que ya tienes en VidaJugador
+                hitCollider.GetComponent<VidaJugador>().QuitarVida((int)dañoJugador);
+            }
         }
     }
 
@@ -37,4 +76,3 @@ public class IAExplosion : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radioDeDetección);
     }
 }
-

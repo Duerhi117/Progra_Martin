@@ -161,6 +161,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 64
+  particulasPrefab: {fileID: 8089616047824486060, guid: facbc99c00e852c46b8069fbacfb2e35, type: 3}
 --- !u!114 &3495668718377608898
 MonoBehaviour:
   m_ObjectHideFlags: 0
