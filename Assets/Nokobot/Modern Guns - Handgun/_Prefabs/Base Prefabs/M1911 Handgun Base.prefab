@@ -71,14 +71,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4878850369403266}
-  - component: {fileID: 1493597871680375541}
+  - component: {fileID: 6276580662426052052}
   m_Layer: 0
   m_Name: M1911 Handgun Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4878850369403266
 Transform:
   m_ObjectHideFlags: 0
@@ -89,16 +89,17 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 3, y: 3, z: 3.0141668}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8807204533815685681}
   - {fileID: 4381382391936632}
   - {fileID: 6071559261934024155}
   - {fileID: 2148212862610113305}
+  - {fileID: 314989778962667474}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1493597871680375541
+--- !u!114 &6276580662426052052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,12 +108,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1690370004738036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41aa9ce42ed6fab448554781e60fcd25, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d73c1d799e54c549a0c650c53857d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadBala: 12000
-  balaPrefab: {fileID: 3568288644934044709, guid: 48159a123e6777a4694d17f36e70aeb3, type: 3}
-  shootPoint: {fileID: 2148212862610113305}
+  balasPorCargador: 6
+  shootPoint: {fileID: 314989778962667474}
+  balaPrefab: {fileID: 4046865027334052773, guid: f54d3a1ac4bcecd4db5338c226466ce4, type: 3}
+  velocidadBala: 1200
+--- !u!1 &1285062280993772019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314989778962667474}
+  m_Layer: 0
+  m_Name: Shoot point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &314989778962667474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285062280993772019}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.099, z: 0.1999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4878850369403266}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2058722250136529284
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,23 +291,23 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: 3d87184bf4725b841b26693d2234fffd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: ef4deb7b6cac3794694ab402e74b3e7e, type: 2}
     - target: {fileID: 2300002, guid: 3d87184bf4725b841b26693d2234fffd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: ef4deb7b6cac3794694ab402e74b3e7e, type: 2}
     - target: {fileID: 2300004, guid: 3d87184bf4725b841b26693d2234fffd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: ef4deb7b6cac3794694ab402e74b3e7e, type: 2}
     - target: {fileID: 2300006, guid: 3d87184bf4725b841b26693d2234fffd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: ef4deb7b6cac3794694ab402e74b3e7e, type: 2}
     - target: {fileID: 2300008, guid: 3d87184bf4725b841b26693d2234fffd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: ef4deb7b6cac3794694ab402e74b3e7e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

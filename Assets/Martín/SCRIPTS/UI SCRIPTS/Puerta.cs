@@ -11,8 +11,6 @@ public class Puerta : MonoBehaviour
     [SerializeField] private float radio;
     [SerializeField] private LayerMask jugadorMascara;
 
-    // Referencia al script del recolector de objetos
-
     private void OnMouseEnter()
     {
         mouseIn = true;
@@ -27,7 +25,7 @@ public class Puerta : MonoBehaviour
         entrarPuerta = Physics.CheckSphere(transform.position, radio, jugadorMascara);
 
 
-        if (Input.GetKeyDown(KeyCode.E) && mouseIn && entrarPuerta && Llave.objetosRecogidos >= Llave.objetosNecesarios)
+        if (Input.GetKeyDown(KeyCode.E) && mouseIn && entrarPuerta && EnemigoMuerte.enemigosVencidos >= EnemigoMuerte.enemigosTotales)
         {
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Fin del juego");

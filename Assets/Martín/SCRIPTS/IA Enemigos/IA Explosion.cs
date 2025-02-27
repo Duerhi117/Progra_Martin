@@ -33,6 +33,9 @@ public class IAExplosion : MonoBehaviour
 
                 AudioManager.AudioInstance.Play("Explosion");
 
+                EnemigoMuerte.enemigosVencidos++;
+                Debug.Log("1 Enemigo Vencido");
+
                 AplicarDañoAlJugador();
 
                 Destroy(gameObject);
@@ -54,7 +57,6 @@ public class IAExplosion : MonoBehaviour
         {
             if (hitCollider.CompareTag("Player"))
             {
-
                 hitCollider.GetComponent<VidaJugador>().QuitarVida((int)dañoJugador);
             }
         }
